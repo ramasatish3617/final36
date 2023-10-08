@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="a62512bf-3d4c-4b32-8773-520c6b7816a8" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<flow name="finalFlow" doc:id="260c7cbf-71fd-4d5d-a9b6-5226a2fbf254" >
+		<http:listener doc:name="Listener" doc:id="ca651abd-44af-449c-b0f6-fedccaf84320" config-ref="HTTP_Listener_config" path="/final"/>
+		<logger level="INFO" doc:name="Logger" doc:id="b9df089b-ea04-4d50-aaed-a7ab272be2cc" message="This is final demo"/>
+		<ee:transform doc:name="Transform Message" doc:id="ae155aa4-bd24-4117-aaa6-4ccc78545c84" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	"message":"This is final test demo"
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>
